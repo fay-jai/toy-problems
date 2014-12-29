@@ -49,7 +49,29 @@ var mixEvents = function (obj) {
   };
 
   obj.remove = function (eventType, callback) {
-    
+    if (arguments.length === 0) {
+      throw new Error('Missing both arguments for remove');
+    }
+
+    if (typeof eventType !== 'string') {
+      throw new Error('Please pass in a string value for the event type to remove');
+    }
+
+    storage[eventType] = storage[eventType] || [];
+    if (arguments.length >= 2) {
+      var i = 0;
+      while (i < storage[eventType].length) {
+        if (storage[eventType][i] === callback) {
+          // remove and don't increment i
+          storage[eventType].splice(i, 1);
+        } else {
+          i += 1;
+        }
+      }
+    } else {
+      // remove all callback functions associated with the event type
+      delete storage[eventType];
+    }
   };
 
   return obj;
