@@ -20,7 +20,33 @@
  * - It is not necessary to write a way to remove listeners.
  */
 
-var mixEvents = function(obj) {
-  // TODO: Your code here
+var mixEvents = function (obj) {
+  var storage = {};
+
+  obj.on = function on (eventType, callback) {
+    if (on.length < 2) {
+      throw new Error('Not enough arguments');
+    }
+
+    if (typeof callback !== 'function') {
+      throw new Error('Callback needs to be a function');
+    }
+
+    // check if event already exists in storage
+    storage[eventType] = storage[eventType] || [];
+    storage[eventType].push(callback);
+  };
+
+  obj.trigger = function (eventType) {
+    if (eventType === void 0) { return; }
+
+    var args = Array.prototype.slice.call(arguments, 1);
+    var listOfCallbacks = storage[eventType] || [];
+
+    listOfCallbacks.forEach(function (cb) {
+      cb.apply(obj, args);
+    });
+  };
+
   return obj;
 };
