@@ -23,8 +23,8 @@
 var mixEvents = function (obj) {
   var storage = {};
 
-  obj.on = function on (eventType, callback) {
-    if (on.length < 2) {
+  obj.on = function (eventType, callback) {
+    if (arguments.length < 2) {
       throw new Error('Not enough arguments');
     }
 
@@ -46,6 +46,10 @@ var mixEvents = function (obj) {
     listOfCallbacks.forEach(function (cb) {
       cb.apply(obj, args);
     });
+  };
+
+  obj.remove = function (eventType, callback) {
+    
   };
 
   return obj;
