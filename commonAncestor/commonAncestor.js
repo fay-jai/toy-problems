@@ -40,7 +40,38 @@ Tree.prototype.addChild = function (child) {
   *  4.) between me and a potato -> null
   */
 Tree.prototype.getClosestCommonAncestor = function (node1, node2) {
-  // TODO: implement me!
+  if (arguments.length < 2) {
+    throw new Error('Need two nodes as input');
+  }
+
+  // get ancestor path of both nodes
+  var ancestorPath1  = this.getAncestorPath(node1);
+  var ancestorPath2  = this.getAncestorPath(node2);
+
+  var result = null;
+  var ancestor2Object, ancestor1Len, ancestor2Len, i, j;
+
+  if (ancestorPath1 === null || ancestorPath2 === null) { return null; }
+
+  ancestor2Object = {};
+  ancestor1Len    = ancestorPath1.length;
+  ancestor2Len    = ancestorPath2.length;
+
+  // convert one of the ancestor path's into an object with key equal to the array value
+  // and value equal to true
+  for (i = 0; i < ancestor2Len; i += 1) {
+    ancestor2Object[ ancestorPath2[i] ] = true;
+  }
+
+  // loop through the other ancestor path and if element is in object, return that element
+  // else return null
+  for (j = 0; j < ancestor1Len; j += 1) {
+    if ( ancestor2Object[ ancestorPath1[j] ] ) {
+      result = ancestorPath1[j];
+    }
+  }
+
+  return result;
 };
 
 /**
