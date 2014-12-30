@@ -5,23 +5,24 @@
   */
 
 /** example usage:
-  * var grandma = new Tree();
-  * var mom = new Tree();
+  * var grandma = new Tree('grandma');
+  * var mom = new Tree('mom');
   * grandma.addChild(mom);
-  * var me = new Tree();
+  * var me = new Tree('me');
   * mom.addChild(me);
   * grandma.getAncestorPath(me); // => [grandma, mom, me]
 */
 
-var Tree = function(){
+var Tree = function (name) {
+  this.name = name;
   this.children = [];
 };
 
 /**
   * add an immediate child
   */
-Tree.prototype.addChild = function(child){
-  if(!this.isDescendant(child)){
+Tree.prototype.addChild = function (child) {
+  if (!this.isDescendant(child)) {
     this.children.push(child);
   }else {
     throw new Error("That child is already a child of this tree");
@@ -38,9 +39,9 @@ Tree.prototype.addChild = function(child){
   *  3.) between my grandma and my grandma -> my grandma
   *  4.) between me and a potato -> null
   */
-Tree.prototype.getClosestCommonAncestor = function(/*...*/){
+Tree.prototype.getClosestCommonAncestor = function (node1, node2) {
   // TODO: implement me!
-}
+};
 
 /**
   * should return the ancestral path of a child to this node.
@@ -50,21 +51,45 @@ Tree.prototype.getClosestCommonAncestor = function(/*...*/){
   * 3.) me.getAncestorPath(me) -> [me]
   * 4.) grandma.getAncestorPath(H R Giger) -> null
   */
-Tree.prototype.getAncestorPath = function(/*...*/){
-  // TODO: implement me!
-}
+
+Tree.prototype.getAncestorPath = function (node) {
+  var inner = function (node, result) {
+    var self = this;
+    var i, childPath;
+
+    // always push self onto result
+    result.push( self.name );
+
+    if ( self === node ) {
+      return result; // array
+    } else if ( self.children.length === 0 ) {
+      return null;
+    } else {
+      for (i = 0; i < self.children.length; i += 1) {
+        // as soon as any child is the node, return the childPath
+        childPath = inner.call( self.children[i], node, result.slice() );
+        if ( childPath ) {
+          return childPath;
+        }
+      }
+      return null;
+    }
+  };
+
+  return inner.call(this, node, []);
+};
 
 /**
   * check to see if the provided tree is already a child of this
   * tree __or any of its sub trees__
   */
-Tree.prototype.isDescendant = function(child){
-  if(this.children.indexOf(child) !== -1){
+Tree.prototype.isDescendant = function (child) {
+  if (this.children.indexOf(child) !== -1) {
     // `child` is an immediate child of this tree
     return true;
   }else{
-    for(var i = 0; i < this.children.length; i++){
-      if(this.children[i].isDescendant(child)){
+    for (var i = 0; i < this.children.length; i++) {
+      if (this.children[i].isDescendant(child)) {
         // `child` is descendant of this tree
         return true;
       }
@@ -76,7 +101,7 @@ Tree.prototype.isDescendant = function(child){
 /**
   * remove an immediate child
   */
-Tree.prototype.removeChild = function(child){
+Tree.prototype.removeChild = function (child) {
   var index = this.children.indexOf(child);
   if(index !== -1){
     // remove the child
