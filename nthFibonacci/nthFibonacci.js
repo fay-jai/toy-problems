@@ -43,5 +43,20 @@ var nthFibonacci = (function () {
 
 // Iterative
 var nthFibonacci = function (n) {
+  var previousOne, previousTwo, result;
 
+  if (n === 1 || n === 0) {
+    return n;
+  }
+
+  previousOne = 1;
+  previousTwo = 0;
+
+  for (var i = 2; i <= n; i += 1) {
+    result = previousOne + previousTwo;
+    previousTwo = previousOne;
+    previousOne = result;
+  }
+
+  return result;
 };
