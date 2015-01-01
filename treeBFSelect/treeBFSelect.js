@@ -56,6 +56,11 @@ Tree.prototype.BFSelect = function (fn) {
     depth += 1;
   }
 
+  /*
+   * At this point, inOrder is an array where each element is an array [value, depth]
+   * (value is the value of the treeNode and depth is the depth of the treeNode)
+   * and the array is in breadthFirst order
+  */
   inOrder.forEach(function (array) {
     var value = array[0];
     var depth = array[1];
