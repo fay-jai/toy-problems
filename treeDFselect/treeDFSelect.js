@@ -30,14 +30,39 @@
  * Basic tree that stores a value.
  */
 
-var Tree = function(value){
+var Tree = function (value) {
   this.value = value;
   this.children = [];
 };
 
-Tree.prototype.DFSelect = function(filter) {
-  // TODO: return an array of values for which the function filter(value, depth) 
-  //       returns true
+Tree.prototype.DFSelect = function (fn) {
+  var temp   = [];
+  var result = [];
+
+  var inner  = function (tree, depth) {
+    var valueAndDepth = [ tree.value, depth ];
+    temp.push( valueAndDepth );
+
+    tree.children.forEach(function (childTree) {
+      inner( childTree, depth + 1 );
+    });
+  };
+
+  inner(this, 0);
+
+  // At this point, temp is an array of [value of treeNode, depth of treeNode]
+  // and the elements are in pre-order depth first search
+
+  temp.forEach(function (array) {
+    var value = array[0];
+    var depth = array[1];
+
+    if ( fn.call(null, value, depth) ) {
+      result.push( value );
+    }
+  });
+
+  return result;
 };
 
 /**
