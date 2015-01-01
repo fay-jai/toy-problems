@@ -38,8 +38,20 @@ var Tree = function(value){
 };
 
 Tree.prototype.countLeaves = function () {
-  // TODO: implement me!
-}
+  // check if 'this' tree instance has any children
+    // if no, return 1
+    // else
+      // create a result variable and set to 0
+      // for each child, execute countLeaves on child
+        // append each count to result
+      // return result
+  var len = this.children.length;
+
+  if (len === 0) return 1;
+  return this.children.reduce(function (acc, currentChild) {
+    return acc + currentChild.countLeaves();
+  }, 0);
+};
 
 /**
   * You shouldn't need to change anything below here, but feel free to look.
