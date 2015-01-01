@@ -7,24 +7,31 @@
   * Stack Class
   */
 
-var Stack = function() {
-  
+var Stack = function () {
+  var storage = {};
+  var size    = 0;
+
   // add an item to the top of the stack
   this.push = function (value) {
-  
+    storage[size] = value;
+    size += 1;
   };
 
   // remove an item from the top of the stack
   this.pop = function () {
-  
+    var popped;
+    if (this.size() > 0) {
+      popped = storage[size - 1];
+      delete storage[size - 1];
+      size -= 1;
+      return popped;
+    }
   };
 
   // return the number of items in the stack
   this.size = function () {
-  
+    return size;
   };
-
-  return this;
 };
 
 /**
