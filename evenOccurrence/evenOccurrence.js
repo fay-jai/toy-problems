@@ -10,6 +10,22 @@
  * console.log(onlyEven); //  4
 */
 
-var evenOccurence = function(arr) {
-  // Your code here.
+var evenOccurence = function (arr) {
+  // Time Complexity: O(n)
+  if ( !Array.isArray(arr) || arr === void 0 ) throw new Error('Need to provide an Array');
+  var hash = {};
+  var len  = arr.length;
+  var i;
+
+  arr.forEach(function (num) {
+    hash[num] = (hash[num] ? hash[num] : 0) + 1;
+  });
+
+  for (i = 0; i < len; i += 1) {
+    if ( hash[ arr[i] ] % 2 === 0 ) {
+      return arr[i];
+    }
+  }
+
+  return null;
 };
