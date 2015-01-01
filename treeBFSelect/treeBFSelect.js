@@ -35,8 +35,34 @@ var Tree = function(value){
   this.children = [];
 };
 
-Tree.prototype.BFSelect = function(filter) {
+Tree.prototype.BFSelect = function (fn) {
   // return an array of values for which the function filter(value, depth) returns true
+  var queue   = [];
+  var inOrder = [];
+  var result  = [];
+  var depth   = 0;
+  var popped;
+
+  queue.push( [ this, depth ] );
+
+  while (queue.length > 0) {
+    popped = queue.shift();
+    inOrder.push( [ popped[0].value, popped[1] ] );
+
+    popped[0].children.forEach(function (child) {
+      queue.push( [ child, depth + 1 ] );
+    });
+
+    depth += 1;
+  }
+
+  inOrder.forEach(function (array) {
+    var value = array[0];
+    var depth = array[1];
+    if ( fn.call(null, value, depth) ) result.push( value );
+  });
+
+  return result;
 };
 
 /**
