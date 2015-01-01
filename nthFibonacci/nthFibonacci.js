@@ -20,6 +20,28 @@
  *
  */
 
+// Recursive with memoization
+var nthFibonacci = (function () {
+  var memo = {};
+
+  return function (n) {
+    var nMinusOne, nMinusTwo, result;
+
+    if ( n === 0 || n === 1 ) {
+      if ( !memo[n] ) { memo[n] = n; }
+      return memo[n];
+    }
+
+    nMinusOne = memo[n - 1] || nthFibonacci(n - 1);
+    nMinusTwo = memo[n - 2] || nthFibonacci(n - 2);
+    result    = nMinusOne + nMinusTwo;
+    memo[n]   = result;
+
+    return memo[n];
+  };
+})();
+
+// Iterative
 var nthFibonacci = function (n) {
-  // TODO: implement me!
+
 };
