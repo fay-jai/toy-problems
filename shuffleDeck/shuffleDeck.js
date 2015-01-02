@@ -31,16 +31,43 @@
  *   See https://www.dartmouth.edu/~chance/teaching_aids/books_articles/Mann.pdf .
  */
 
-var shuffleDeck = function(deck) {
-  // Your code here
+// Apparently, this is biased...
+// var shuffleDeck = function (deck) {
+//   var len = deck.length;
+//   var i;
+
+//   for (i = 0; i < len; i += 1) {
+//     swap(deck, i, Math.floor( Math.random() * len ) );
+//   }
+
+//   return deck;
+// };
+
+var shuffleDeck = function (deck) {
+  var numUnshuffledCards = deck.length;
+  var randomIdx;
+
+  while ( numUnshuffledCards > 0 ) {
+    randomIdx = Math.floor( Math.random() * numUnshuffledCards );
+    numUnshuffledCards -= 1;
+    swap( deck, numUnshuffledCards, randomIdx );
+  }
+
+  return deck;
+};
+
+var swap = function (deck, i, j) {
+  var temp = deck[i];
+  deck[i]  = deck[j];
+  deck[j]  = temp;
 };
 
 // Ordered deck generator provided for your testing convenience
 // (You may alter this function, but an unaltered copy will be used for tests.)
-var orderedDeck = function() {
-  var suits = [ '♥', '♣', '♠', '♦' ];
+var orderedDeck = function () {
+  var suits  = [ '♥', '♣', '♠', '♦' ];
   var values = [ 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K' ];
-  var deck = [];
+  var deck   = [];
 
   suits.forEach(function(suit) {
     values.forEach(function(value) {
