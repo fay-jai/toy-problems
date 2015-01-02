@@ -22,30 +22,27 @@ $(function () {
     }
   };
 
-  var sort = function (array) {
-    return Array.prototype.sort.call(array, function (a, b) {
-      return b[0] - a[0];
-    });
-  };
-
-  var $tr = $('tr');
+  var $tbody = $('tbody');
+  var $tr = $('tbody > tr');
+  var order = false;
 
   $('th').each(function (thIdx, thElement) {
     $(thElement).on('click', function () {
-      var result = [];
-      var order  = [];
+      order = !order;
 
-      for (var i = 1; i < $tr.length; i += 1) {
-        result.push( [ convert(thIdx, $tr[i].children[thIdx].innerHTML), i] );
+      if (order) {
+        $tr.sort(function (a, b) {
+          return convert(thIdx, b.children[thIdx].innerHTML) > convert(thIdx, a.children[thIdx].innerHTML);
+        });
+      } else {
+        $tr.sort(function (a, b) {
+          return convert(thIdx, b.children[thIdx].innerHTML) < convert(thIdx, a.children[thIdx].innerHTML);
+        });
       }
 
-      sort(result);
-
-      result.forEach(function (array) {
-        order.push( array[1] );
+      $.each($tr, function (index, row) {
+        $tbody.append(row);
       });
-
-      console.log( order );
     });
   });
 });
