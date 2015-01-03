@@ -25,9 +25,25 @@ var DIGIT_VALUES = {
   M: 1000
 };
 
-var translateRomanNumeral = function(romanNumeral){
-  if(typeof romanNumeral !== 'string') {
+var translateRomanNumeral = function (romanNumeral) {
+  if (typeof romanNumeral !== 'string') {
     throw 'function "translateRomanNumeral" can only process strings';
   }
-  // TODO: Implement me!
+
+  var len    = romanNumeral.length;
+  var result = 0;
+  var i, current, next;
+
+  // base case
+  if (len <= 0) return 0;
+  if (len === 1) return DIGIT_VALUES[ romanNumeral ];
+
+  for (i = 0; i < len - 1; i += 1) {
+    current = DIGIT_VALUES[ romanNumeral[i] ];
+    next    = DIGIT_VALUES[ romanNumeral[i + 1] ];
+
+    result += (current >= next ? current : -current);
+  }
+
+  return result + DIGIT_VALUES[ romanNumeral[i] ];
 };
