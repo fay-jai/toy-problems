@@ -31,10 +31,27 @@
  * Constraint 3: Do not mutate the original nodes in any way
  */
 
-var Node = function(value){
-  return { value: value, next: null };
-}
+var Node = function (value) {
+  return {
+    value : value,
+    next  : null
+  };
+};
 
-var hasCycle = function(linkedList){
-  // TODO: implement me!
+var hasCycle = function (linkedList) {
+  // create two 'runners' who start at the same node
+  var one = linkedList;
+  var two = linkedList;
+
+  while ( true ) {
+    // check if the next one or two nodes are null
+    if ( two.next === null || two.next.next === null ) return false;
+
+    // one will go 'slower' than two
+    one = one.next;
+    two = two.next.next;
+
+    // if there is a cycle, there eventually both of these runners will cross
+    if ( one === two ) return true;
+  }
 };
