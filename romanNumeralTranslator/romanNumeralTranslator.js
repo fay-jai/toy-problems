@@ -41,6 +41,7 @@ var translateRomanNumeral = function (romanNumeral) {
   for (i = 0; i < len - 1; i += 1) {
     current = DIGIT_VALUES[ romanNumeral[i] ];
     next    = DIGIT_VALUES[ romanNumeral[i + 1] ];
+    if ( current === void 0 || next === void 0 ) throw new Error('Invalid roman numeral characters');
 
     result += (current >= next ? current : -current);
   }
