@@ -12,7 +12,7 @@ var longestPalindrome = function (string) {
   var i, j, word;
 
   for (i = 0; i < len; i += 1) {
-    for (j = i + 1; j < len + 1; j += 1) {
+    for (j = len; j > i; j -= 1) {
       word = string.slice(i, j);
 
       if ( isPalindrome( word ) && word.length > result.length) {
