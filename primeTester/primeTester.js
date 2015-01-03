@@ -4,13 +4,31 @@
  * a prime number, false if it's not.
  */
 
-var primeTester = function(n) {
-  if(typeof n !== 'number' || n < 1 || n % 1 !== 0){
-    // n isn't a number or n is less than 1 or n is not an integer
-    return false;
-  }
-  // TODO: return true if n is prime, false otherwise
-};
+var primeTester = (function () {
+  var cache = {};
+
+  return function (n) {
+    if ( typeof n !== 'number' ) return false;
+
+    // if number is in cache, return results from cache
+    if ( cache[n] ) return cache[n];
+
+    // n is less than 1 or n is not an integer
+    if ( n <= 1 || n % 1 !== 0 ) {
+      cache[n] = false;
+    } else {
+      for (var i = 2; i < n; i += 1) {
+        if (n % i === 0) {
+          cache[n] = false;
+          return cache[n];
+        }
+      }
+      cache[n] = true;
+    }
+
+    return cache[n];
+  };
+})();
 
 /* Extra credit: Write a function that generates a list of all prime numbers
  * in a user-specified range (inclusive). If you're not quite sure where to start,
@@ -18,6 +36,6 @@ var primeTester = function(n) {
  * saucy, check out the Sieve of Atkin.)
  */
 
-var primeSieve = function(start, end) {
+var primeSieve = function (start, end) {
   // Return a list of all prime numbers >= start and <= end
 };
