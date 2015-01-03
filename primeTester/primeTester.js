@@ -38,4 +38,14 @@ var primeTester = (function () {
 
 var primeSieve = function (start, end) {
   // Return a list of all prime numbers >= start and <= end
+  var result = [];
+  var i;
+
+  for (i = start; i <= end; i += 1) {
+    if ( primeTester(i) ) {
+      result.push( i );
+    }
+  }
+
+  return result;
 };
