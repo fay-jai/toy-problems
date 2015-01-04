@@ -24,6 +24,20 @@
 *
 */
 
-var rockPaperScissors = function () {
-  // TODO: your solution here
+var rockPaperScissors = function (n) {
+  var result = [];
+  var choices = ['rock', 'paper', 'scissors'];
+  var previous;
+
+  if (n <= 0) return result;
+  if (n === 1) return [ ['rock'], ['paper'], ['scissors'] ];
+
+  previous = rockPaperScissors( n - 1 );
+  previous.forEach(function (array) {
+    choices.forEach(function (choice) {
+      result.push( Array.prototype.concat( array, choice ) );
+    });
+  });
+
+  return result;
 };
