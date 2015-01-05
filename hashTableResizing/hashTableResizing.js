@@ -17,7 +17,7 @@ var makeHashTable = function () {
     var idx    = getIndexBelowMaxForKey(key, storageLimit);
     var bucket = storage[idx] || [];
     var len    = bucket.length;
-    var i;
+    var utilization, i;
 
     // determine whether the key, value pair already exists as an element in bucket
     for ( i = 0; i < len; i += 1 ) {
@@ -34,6 +34,11 @@ var makeHashTable = function () {
 
     // increase size
     size += 1;
+    utilization = size / storageLimit;
+
+    if ( utilization > 0.75 ) {
+      result.adjustStorageLimit( storageLimit * 2 );
+    }
   };
 
   result.retrieve = function (key) {
@@ -51,25 +56,44 @@ var makeHashTable = function () {
     var idx    = getIndexBelowMaxForKey(key, storageLimit);
     var bucket = storage[idx] || [];
     var len    = bucket.length;
-    var value, i;
+    var utilization, value, i;
 
     for ( i = 0; i < len; i += 1 ) {
       if ( bucket[i][0] === key ) {
         value = bucket.splice(i, 1);
 
         size -= 1;
+        utilization = size / storageLimit;
+
+        if ( utilization < 0.25 ) {
+          result.adjustStorageLimit( storageLimit / 2 );
+        }
 
         return value[0];
       }
     }
   };
 
-  result.adjustStorageLimit = function () {
-    // for now, focus on case where you're doubling the storage limit
-
-    // determine what the new storage limit is
+  result.adjustStorageLimit = function (newStorageLimit) {
     // create a new storage array
-    // for each item in the current storage array
+    var newStorageArray = [];
+    var newBucket, idx;
+
+    // for each bucket in current storage array
+    storage.forEach(function (bucket) {
+      bucket.forEach(function (array) {
+        // re-hash all key, value pairs and push them into newStorageArray
+        idx       = getIndexBelowMaxForKey( array[0], newStorageLimit );
+        newBucket = newStorageArray[idx] || [];
+        newBucket.push( [ array[0], array[1] ] );
+        newStorageArray[idx] = newBucket;
+      });
+    });
+
+    // set storage array as new storage array
+    storage = newStorageArray;
+    // set storage limit as new storage limit
+    storageLimit = newStorageLimit;
   };
 
   return result;
