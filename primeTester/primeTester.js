@@ -49,3 +49,59 @@ var primeSieve = function (start, end) {
 
   return result;
 };
+
+// Sieve of Eratosthenes
+var generateListOfPrimesLessThanOrEqualTo = function (num) {
+  if ( num < 2 ) return [];
+
+  var flags = init(num);
+  var prime = 2;
+
+  while (prime <= num) {
+    crossOff( flags, prime );
+    prime = getNextPrime( flags, prime );
+  }
+
+  return filter(flags, function (bool) { return bool; });
+};
+
+var init = function (num) {
+  var obj = {};
+  for (var i = 0; i <= num; i += 1) {
+    obj[i] = true;
+  }
+
+  // 0 and 1 are not primes by definition
+  obj[0] = false;
+  obj[1] = false;
+
+  return obj;
+};
+
+var crossOff = function (flags, prime) {
+  var len = Object.keys( flags ).length;
+
+  for (var i = prime * prime; i < len; i += prime) {
+    flags[i] = false;
+  }
+};
+
+var getNextPrime = function (flags, prime) {
+  var next = prime + 1;
+  var len = Object.keys( flags ).length;
+
+  while (next < len && !flags[next]) {
+    next += 1;
+  }
+  return next;
+};
+
+var filter = function (obj, fn) {
+  var result = [];
+  for (var prop in obj) {
+    if ( fn(obj[prop]) ) {
+      result.push( parseInt(prop, 10) );
+    }
+  }
+  return result;
+};
