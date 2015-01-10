@@ -10,5 +10,21 @@
  * the correct set of values.
  */
 
-var powerSet = function(str){
-}
+var powerSet = function (str) {
+  if (str.length === 0) return [''];
+  if (str.length === 1) return [ str ];
+
+  var result = [];
+  var first  = str[0];
+  var rest   = str.slice(1);
+  var recur  = powerSet( rest );
+
+  recur.forEach( function (s) {
+    result.push( s );
+    result.push( first + s );
+  });
+
+  result.push( first );
+
+  return result;
+};
