@@ -13,59 +13,37 @@
 
 var commonCharacters = function () {
   var args = Array.prototype.slice.call(arguments);
-  if (args.length < 2) {
-    throw new Error('Not enough string arguments');
+  if (args.length < 2) throw new Error('Require at least 2 input strings');
+
+  var str    = '';
+  var first  = args[0];
+
+  /*
+   * Key step here: keep on reducing the unique set until you get the result across
+   * all strings
+  */
+  var result = args.reduce(function (acc, cur) {
+    return createUniqueSet(acc, cur);
+  });
+
+  for (var i = 0; i < first.length; i += 1) {
+    if (result[first[i]]) {
+      str += first[i];
+      result[first[i]] = false;
+    }
   }
 
-  var result      = '';
-  var firstString = args[0];
-  var arrayOfSets = [];
-  var inter       = {};
-
-  // create an array of sets for all strings in args
-  args.forEach(function (string) {
-    arrayOfSets.push( createSet( string ) );
-  });
-
-  // create master intersect obj
-  inter = intersect.apply(null, arrayOfSets);
-
-  // loop through string1 and if element in inter, push to result
-  firstString.split('').forEach(function (character) {
-    if ( inter[character] ) { result += character; }
-  });
-
-  return result;
+  return str;
 };
 
-var createSet = function (string) {
+var createUniqueSet = function (a, b) {
+  var hashB  = {};
   var result = {};
-  var arr    = string.split('');
+  var i;
 
-  arr.forEach(function (character) {
-    result[character] = true;
-  });
+  for (i = 0; i < b.length; i += 1) {
+    result[b[i]] = true;
+  }
 
   return result;
-};
-
-var intersect = function () { // assume each argument is an object
-  var args  = Array.prototype.slice.call(arguments);
-
-  var inner = function (first, arr) {
-    var result, prop;
-    // base case
-    if ( arr.length === 0 ) { return first; }
-
-    result = {};
-    for ( prop in first ) {
-      if ( arr[0][prop] ) {
-        result[prop] = true;
-      }
-    }
-
-    return inner( result, arr.slice(1) );
-  };
-
-  return inner( args[0], args.slice(1) );
 };
