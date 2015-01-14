@@ -68,3 +68,17 @@ var coinsAvailable = function (num) {
     return n <= num;
   });
 };
+
+// Implementation using Reduce
+// var makeChange = function (num) {
+//   var inner = function (num, coins) {
+//     if (num  <  0) return 0;
+//     if (num === 0) return 1;
+//
+//     return coins.reduce(function (acc, cur) {
+//       return acc + inner(num - cur, coinsAvailable(cur));
+//     }, 0);
+//   };
+//
+//   return inner(num, coinsAvailable(num));
+// };
