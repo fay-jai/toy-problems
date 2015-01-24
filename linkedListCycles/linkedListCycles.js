@@ -2,7 +2,7 @@
  * Assignment: Write a function that returns true if a linked list contains a cycle, or false if it terminates somewhere
  *
  * Explanation:
- * 
+ *
  * Generally, we assume that a linked list will terminate in a null next pointer, as follows:
  *
  * A -> B -> C -> D -> E -> null
