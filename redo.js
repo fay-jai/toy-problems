@@ -101,29 +101,6 @@ var binarySearch = function (arr, num) {
 };
 
 
-var makeChange = function (num) {
-  var inner = function (num, coins) {
-    if (num  <  0) { return 0; }
-    if (num === 0) { return 1; }
-
-    var total = 0;
-    coins.forEach(function (amt) {
-      total += inner(num - amt, availableCoins(amt));
-    });
-
-    return total;
-  };
-
-  return inner(num, availableCoins(num));
-};
-
-var availableCoins = function (num) {
-  return [200, 100, 50, 20, 10, 5, 2, 1].filter(function (n) {
-    return num >= n;
-  });
-};
-
-
 var characterFrequency = function (string) {
   var createHash = function (string) {
     var hash = {};
@@ -158,3 +135,64 @@ var characterFrequency = function (string) {
   return dsHash;
 };
 
+
+var makeChange = function (num) {
+  var inner = function (num, coins) {
+    if (num  <  0) { return 0; }
+    if (num === 0) { return 1; }
+
+    var total = 0;
+    coins.forEach(function (amt) {
+      total += inner(num - amt, availableCoins(amt));
+    });
+
+    return total;
+  };
+
+  return inner(num, availableCoins(num));
+};
+
+var availableCoins = function (num) {
+  return [200, 100, 50, 20, 10, 5, 2, 1].filter(function (n) {
+    return num >= n;
+  });
+};
+
+
+var convertToHash = function (string) {
+  var hash = {};
+  for (var i = 0; i < string.length; i += 1) {
+    hash[string[i]] = true;
+  }
+  return hash;
+};
+
+var combineHash = function (hash1, hash2) {
+  var result = {};
+  for (var prop in hash1) {
+    if (hash2[prop]) {
+      result[prop] = true;
+    }
+  }
+  return result;
+};
+
+var commonCharacters = function () {
+  var args   = Array.prototype.slice.call(arguments);
+  var first  = args[0];
+  var result = args
+    .map(function (string) {
+      return convertToHash(string);
+    })
+    .reduce(function (acc, cur) {
+      return combineHash(acc, cur);
+    });
+
+  return first.split('')
+    .filter(function (character) {
+      var temp = result[character];
+      delete result[character];
+      return temp;
+    })
+    .join('');
+};
