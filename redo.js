@@ -217,3 +217,26 @@ var mixEvents = function (obj) {
 
   return obj;
 };
+
+
+Array.prototype.isSubsetOf = function (base) {
+  var thisLen = this.length;
+  var baseLen = base.length;
+  var isFound, i, j;
+
+  if (thisLen > baseLen) return false;
+
+  // 'this' array contains at most base array's number of elements
+  for (i = 0; i < thisLen; i += 1) {
+    isFound = false;
+    for (j = 0; j < baseLen; j += 1) {
+      if (this[i] === base[j]) {
+        isFound = true;
+      }
+    }
+    // check if isFound has flipped
+    if (!isFound) return false;
+  }
+
+  return true;
+};
