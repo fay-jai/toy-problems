@@ -196,3 +196,24 @@ var commonCharacters = function () {
     })
     .join('');
 };
+
+
+var mixEvents = function (obj) {
+  var eventHash = {};
+
+  obj.on = function (e, callback) {
+    // check if event already exists in eventHash
+    eventHash[ e ] = eventHash[ e ] || [];
+    eventHash[ e ].push( callback );
+  };
+
+  obj.trigger = function (e) {
+    var args = Array.prototype.slice.call(arguments, 1);
+    var allCallbacks = eventHash[ e ];
+    allCallbacks.forEach(function (fn) {
+      fn.apply(this, args);
+    });
+  };
+
+  return obj;
+};
