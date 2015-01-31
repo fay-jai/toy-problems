@@ -240,3 +240,66 @@ Array.prototype.isSubsetOf = function (base) {
 
   return true;
 };
+
+
+var quickSort = function (array) {
+  // base case
+  if (array.length < 2) return array;
+
+  var pivot = array.splice(0, 1)[0];
+  var left  = [];
+  var right = [];
+  var len   = array.length;
+  var i;
+
+  for (i = 0; i < len; i += 1) {
+    (array[i] <= pivot ? left : right).push( array[i] );
+  }
+
+  return Array.prototype.concat.call( quickSort(left), pivot, quickSort(right) );
+};
+
+
+var mergeSort = function (array) {
+  var len = array.length;
+  if (len < 2) return array;
+
+  var mid   = Math.floor(len / 2);
+  var left  = mergeSort( array.slice(0, mid) );
+  var right = mergeSort( array.slice(mid) );
+
+  return merge(array, left, right);
+};
+
+var merge = function (array, left, right) {
+  var leftLen  = left.length;
+  var rightLen = right.length;
+  var i = 0;
+  var j = 0;
+  var k = 0;
+
+  while (j < leftLen && k < rightLen) {
+    if (left[j] <= right[k]) {
+      array[i] = left[j];
+      j += 1;
+    } else {
+      array[i] = right[k];
+      k += 1;
+    }
+    i += 1;
+  }
+
+  while (j < leftLen) {
+    array[i] = left[j];
+    i += 1;
+    j += 1;
+  }
+
+  while (k < rightLen) {
+    array[i] = right[k];
+    i += 1;
+    k += 1;
+  }
+
+  return array;
+};
