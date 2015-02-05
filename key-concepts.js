@@ -85,8 +85,40 @@ var permutations = function (array) {
   }, []);
 };
 
-var combinations = function (array) {
+/*
+ * Given an array of values, produce an array of all the combinations of those values.
+*/
 
+/*
+ * Key Concepts: recursion, head recursion, returning a copy of array
+*/
+var combinations = function (array) {
+  var len = array.length;
+  var first, rest, previous, result;
+
+  // establish base cases
+  if (len === 0) return [];
+  if (len === 1) return [ array ];
+
+  // recursive case
+  result   = [];
+  first    = array.slice(0, 1);
+  rest     = array.slice(1);
+  previous = combinations( rest );
+
+  /*
+   * For each array in previous, append 2 copies: one of the array itself and
+   * another of the array with the first value concatenated to it. Also append
+   * the first value itself onto result.
+  */
+
+  previous.forEach(function (soFar) {
+    result.push( soFar );
+    result.push( first.concat(soFar) );
+  });
+
+  result.push( first );
+  return result;
 };
 
 var binarySearch = function (array) {
