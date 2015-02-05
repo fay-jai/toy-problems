@@ -399,8 +399,23 @@ var evenOccurences = function (integerArray) {
  * flatten([1, 2, [3, [4], 5, 6], 7]) // [1, 2, 3, 4, 5, 6, 7]
 */
 
+/*
+ * Key Concepts: recursion, tail recursion, concat producing new array value
+*/
 var flatten = function (array) {
+  var len = array.length;
+  var first, rest;
 
+  // establish base case
+  if (len === 0) return array;
+
+  // recursive case
+  first = array[0];
+  rest  = array.slice(1);
+
+  return Array.isArray(first) ?
+    flatten(first).concat( flatten(rest) ) :
+    Array.prototype.concat( first, flatten(rest) );
 };
 
 /*
