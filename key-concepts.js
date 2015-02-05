@@ -486,8 +486,23 @@ var flatten = function (array) {
  * f(2, [1, 1, 3, 3]) // 4 (Due to 4x [1, 3])
 */
 
+/*
+ * Key Concepts: iterative approach
+*/
 var integerDifference = function (num, array) {
+  var len   = array.length;
+  var count = 0;
+  var i, j;
 
+  for (i = 0; i < len - 1; i += 1) {
+    for (j = i + 1; j < len; j += 1) {
+      if (Math.abs( array[i] - array[j] ) === num) {
+        count += 1;
+      }
+    }
+  }
+
+  return count;
 };
 
 /*
