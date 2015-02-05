@@ -499,8 +499,31 @@ var integerDifference = function (num, array) {
  * "d racecar d".
 */
 
+/*
+ * Key Concepts: iterative approach
+*/
 var largestPalindrome = function (string) {
+  var len       = string.length;
+  var maxLength = 0;
+  var result    = '';
+  var start, end, slice;
 
+  for (start = 0; start < len - 1; start += 1) {
+    for (end = start + 1; end < len; end += 1) {
+      // create slices of the string and check if each slice is a palindrome
+      // if it is, check if its the largest palindrome so far
+      slice = string.slice(start, end);
+      if (isPalindrome(slice) && slice.length > maxLength) {
+        result = slice;
+        maxLength = slice.length;
+      }
+    }
+  }
+  return result;
+};
+
+var isPalindrome = function (string) {
+  return string === string.split('').reverse().join('');
 };
 
 /*
