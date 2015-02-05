@@ -516,8 +516,31 @@ var largestPalindrome = function (string) {
  * buffalo") => ["buffalo"] or ["Buffalo"]
 */
 
+/*
+ * Key Concepts: functional programming, creating hash tables
+*/
 var longestWords = function (string) {
+  // convert string to array of words
+  var words = reduceWords( string.toLowerCase().split(' ') );
 
+  // convert array of words to array of word lengths
+  // apply Max on array of word lengths
+  var max = Math.max.apply(null, words.map(function (word) {
+    return word.length;
+  }));
+
+  // return words with length equal to max length
+  return words.filter(function (word) {
+    return word.length === max;
+  });
+};
+
+var reduceWords = function (array) {
+  var hash = {};
+  for (var i = 0; i < array.length; i += 1) {
+    hash[ array[i] ] = hash[ array[i] ] || true;
+  }
+  return Object.keys(hash);
 };
 
 /*
