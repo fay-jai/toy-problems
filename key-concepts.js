@@ -236,11 +236,28 @@ var makeChange = function (amt) {
  * - If `obj.trigger` is called with additional arguments, pass those to the
  *   listeners.
  * - It is not necessary to write a way to remove listeners.
- */
+*/
 
- var mixEvents = function (obj) {
+/*
+ * Key Concepts: closure, arguments, caching, lexical scope
+*/
+var mixEvents = function (obj) {
+  var eventCache = {};
 
- };
+  obj.on = function (ev, callback) {
+    eventCache[ev] = eventCache[ev] || [];
+    eventCache[ev].push( callback );
+  };
+
+  obj.trigger = function (ev) {
+    var args = Array.prototype.slice.call(arguments, 1);
+    eventCache[ev].forEach(function (callback) {
+      callback.apply(this, args);
+    });
+  };
+
+  return obj;
+};
 
  /*
  * function bind():
