@@ -121,8 +121,25 @@ var combinations = function (array) {
   return result;
 };
 
-var binarySearch = function (array) {
+/*
+ * Given a sorted array, perform binary search
+*/
 
+var binarySearch = function (sortedArray, value) {
+  var len   = sortedArray.length;
+  var inner = function (start, end) {
+    var mid = Math.floor( (start + end) / 2 );
+
+    // base cases
+    if (mid === start || mid === end) return sortedArray[mid] === value ? mid : null;
+    if (value === sortedArray[mid])   return mid;
+
+    // recursive case
+    if (value < sortedArray[mid]) return inner(start, mid);
+    return inner(mid, end);
+  };
+
+  return inner(0, len);
 };
 
 /*
