@@ -284,8 +284,16 @@ var mixEvents = function (obj) {
  *
 */
 
-var bind = function () {
-
+/*
+ * Key Concepts: arguments (not an Array), returning functions, closures, context
+*/
+var bind = function (fn, context) {
+  var outerArgs = Array.prototype.slice.call(arguments, 2);
+  return function () {
+    var innerArgs = Array.prototype.slice.call(arguments);
+    var allArgs   = Array.prototype.concat(outerArgs, innerArgs);
+    return fn.apply(context, allArgs);
+  };
 };
 
 /*
