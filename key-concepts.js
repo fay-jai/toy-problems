@@ -232,7 +232,7 @@ var makeChange = function (amt) {
     */
     return coins.reduce(function (total, eachCoin) {
       return total + inner(amt - eachCoin, availableCoins(eachCoin));
-    }, 0)
+    }, 0);
   };
 
   return inner(amt, availableCoins(amt));
@@ -353,8 +353,37 @@ var bind = function (fn, context) {
  *
 */
 
+/*
+ * Key Concepts: quick sort O(n * log(n)), converting to hash
+*/
 var characterFrequency = function (string) {
+  return arrayOfArray( convertToHash(string) ).sort(function (arr1, arr2) {
+    if (arr1[1] > arr2[1]) {
+      return -1;
+    } else if (arr1[1] < arr2[1]) {
+      return 1;
+    } else {
+      // arr1[1] === arr2[1]
+      return arr1[0] < arr2[0] ? -1 : 1;
+    }
+  });
+};
 
+var convertToHash = function (string) {
+  var hash = {};
+  for (var i = 0; i < string.length; i += 1) {
+    hash[ string[i] ] = hash[ string[i] ] || 0;
+    hash[ string[i] ] += 1;
+  }
+  return hash;
+};
+
+var arrayOfArray = function (obj) {
+  var result = [];
+  for (var prop in obj) {
+    result.push( [prop, obj[prop]] );
+  }
+  return result;
 };
 
 /*
