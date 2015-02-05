@@ -156,8 +156,34 @@ var binarySearch = function (sortedArray, value) {
  * including non-strings.
 */
 
-var isSubsetOf = function () {
+/*
+ * Key Concepts: gain efficiency by converting to hash table O(n)
+*/
+var isSubsetOf = function (base, input) {
+  var baseHash  = {};
+  var inputHash = {};
+  var prop;
 
+  base.forEach(function (i) {
+    baseHash[i] = baseHash[i] || 0;
+    baseHash[i] += 1;
+  });
+
+  input.forEach(function (i) {
+    inputHash[i] = inputHash[i] || 0;
+    inputHash[i] += 1;
+  });
+
+  for (prop in inputHash) {
+    // prop doesn't show up in baseHash
+    if (!baseHash[prop]) return false;
+
+    // the amount in inputHash > baseHash
+    baseHash[prop] = baseHash[prop] - inputHash[prop];
+    if (baseHash[prop] < 0) return false;
+  }
+
+  return true;
 };
 
 /*
