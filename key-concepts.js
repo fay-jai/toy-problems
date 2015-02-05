@@ -27,14 +27,13 @@
  * Key Concepts: recursion, head recursion, returning a copy of array
 */
 var rockPaperScissors = function (num) {
-  var previous, possibleThrow, result;
+  var previous, possibleThrow;
 
   // establish base cases
   if (num <=  0) return [];
   if (num === 1) return [ ['rock'], ['paper'], ['scissors'] ];
 
   // recursive case
-  result        = [];
   possibleThrow = ['rock', 'paper', 'scissors'];
   previous      = rockPaperScissors(num - 1); // assume num - 1 solution is solved
 
@@ -43,17 +42,47 @@ var rockPaperScissors = function (num) {
    * that particular solution, and then append the new throw to result.
   */
 
-  previous.forEach(function (soFar) {
+  return previous.reduce(function (acc, soFar) {
     possibleThrow.forEach(function (hand) {
-      result.push( soFar.concat(hand) );
+      acc.push( soFar.concat(hand) );
     });
-  });
-
-  return result;
+    return acc;
+  }, []);
 };
 
-var permutations = function (array) {
+/*
+ * Given an array of values, produce all permutations of those values.
+*/
 
+/*
+ * Key Concepts: recursion, head recursion, returning a copy of array
+*/
+var permutations = function (array) {
+  var len = array.length;
+  var first, rest, previous;
+
+  // establish base cases
+  if (len === 0) return [];
+  if (len === 1) return [ array ];
+
+  // recursive case
+  first    = array.slice(0, 1);
+  rest     = array.slice(1);
+  previous = permutations( rest ); // assume permutations of the original array excluding the first element has been solved
+
+  /*
+   * Go through each array in previous, and for each array, concatenate the first
+   * array into each index from 0 to end of that array. Append the resultant array
+   * into result.
+  */
+  return previous.reduce(function (acc, soFar) {
+    var i, temp;
+    for (i = 0; i <= soFar.length; i += 1) {
+      temp = Array.prototype.concat( soFar.slice(0, i), first, soFar.slice(i) );
+      acc.push( temp );
+    }
+    return acc;
+  }, []);
 };
 
 var combinations = function (array) {
