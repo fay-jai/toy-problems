@@ -443,8 +443,27 @@ var arrayPairSum = function (num, array) {
  * others have odd occurrences. Find the element with even occurrences.
 */
 
+/*
+ * Key Concepts: creating hashes for constant time lookup
+*/
 var evenOccurences = function (integerArray) {
+  var len = integerArray.length;
+  var hash = integerHash(integerArray);
 
+  for (var i = 0; i < len; i += 1) {
+    if (hash[ integerArray[i] ] % 2 === 0) return integerArray[i];
+  }
+
+  throw new Error('There are no even occurrences');
+};
+
+var integerHash = function (integerArray) {
+  var hash = {};
+  for (var i = 0; i < integerArray.length; i += 1) {
+    hash[ integerArray[i] ] = hash[ integerArray[i] ] || 0;
+    hash[ integerArray[i] ] += 1;
+  }
+  return hash;
 };
 
 /*
