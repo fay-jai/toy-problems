@@ -433,7 +433,34 @@ var isBinarySearchTree = function (tree) {
 */
 
 var arrayPairSum = function (num, array) {
+  var hash   = {};
+  var result = [];
+  var matchPairs = createAllPairs(array).filter(function (arr) {
+    return arr.reduce(function (a, c) { return a + c; }, 0) === num;
+  });
 
+  matchPairs.forEach(function (pair) {
+    hash[ pair ] = hash[ pair ] || hash[ pair.reverse() ] || true;
+  });
+
+  for (var prop in hash) {
+    var temp = prop.split(',');
+    result.push( [ parseInt(temp[0], 10), parseInt(temp[1], 10) ] );
+  }
+  return result;
+};
+
+var createAllPairs = function (array) {
+  var len    = array.length;
+  var result = [];
+  var i, j;
+
+  for (i = 0; i < len - 1; i += 1) {
+    for (j = i + 1; j < len; j += 1) {
+      result.push( [array[i], array[j]] );
+    }
+  }
+  return result;
 };
 
 /*
