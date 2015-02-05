@@ -323,13 +323,13 @@ var bind = function (fn, context) {
  *  ]
  *
  *
- */
+*/
 
- var characterFrequency = function (string) {
+var characterFrequency = function (string) {
 
- };
+};
 
- /*
+/*
  * Anagram Detection
  *
  * Write a function that accepts two parameters, a parent and a child string.
@@ -458,6 +458,17 @@ var longestWords = function (string) {
  * executed `x` number of times before it stops working.
 */
 
-var once = function () {
-
+/*
+ * Key Concepts: closure, lexical scope, returning functions as values, arguments
+*/
+var once = function (fn, x) {
+  x = x || 1;
+  var counter = 0;
+  return function () {
+    var args = Array.prototype.slice.call(arguments);
+    if (counter < x) {
+      counter += 1;
+      return fn.apply(this, args);
+    }
+  };
 };
