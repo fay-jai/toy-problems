@@ -1,31 +1,55 @@
 /*
-* Write a function that generates every sequence of throws a single
-* player could throw over a three-round game of rock-paper-scissors.
-*
-* Example:
-*   [
-*     [ // one possible three round game outcome
-*       'rock',    // round 1
-*       'paper',   // round 2
-*       'scissors' // round 3
-*     ],
-*     [ // next possible three round game outcome
-*       'rock',    // round 1
-*       'paper',   // round 2
-*       'rock'     // round 3
-*     ],
-*   etc...
-*   ]
-*
-* Extra credit:
-*   - Make your function return answers for any number of rounds.
-* Example:
-* rockPaperScissors(5); // => [['rock', 'rock', 'rock', 'rock', 'rock'], etc...]
-*
+ * Write a function that generates every sequence of throws a single
+ * player could throw over a three-round game of rock-paper-scissors.
+ *
+ * Example:
+ *   [
+ *     [ // one possible three round game outcome
+ *       'rock',    // round 1
+ *       'paper',   // round 2
+ *       'scissors' // round 3
+ *     ],
+ *     [ // next possible three round game outcome
+ *       'rock',    // round 1
+ *       'paper',   // round 2
+ *       'rock'     // round 3
+ *     ],
+ *   etc...
+ *   ]
+ *
+ * Extra credit: Make your function return answers for any number of rounds.
+ *
+ * Example:
+ * rockPaperScissors(5); // => [['rock', 'rock', 'rock', 'rock', 'rock'], etc...]
 */
 
+/*
+ * Key Concepts: recursion, head recursion, returning a copy of array
+*/
 var rockPaperScissors = function (num) {
+  var previous, possibleThrow, result;
 
+  // establish base cases
+  if (num <=  0) return [];
+  if (num === 1) return [ ['rock'], ['paper'], ['scissors'] ];
+
+  // recursive case
+  result        = [];
+  possibleThrow = ['rock', 'paper', 'scissors'];
+  previous      = rockPaperScissors(num - 1); // assume num - 1 solution is solved
+
+  /*
+   * Go through each array solution in previous and add each possible throw onto
+   * that particular solution, and then append the new throw to result.
+  */
+
+  previous.forEach(function (soFar) {
+    possibleThrow.forEach(function (hand) {
+      result.push( soFar.concat(hand) );
+    });
+  });
+
+  return result;
 };
 
 var permutations = function (array) {
