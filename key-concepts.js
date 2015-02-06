@@ -496,8 +496,21 @@ var characterToPrime = {
  * Given a binary tree, check whether it’s a binary search tree or not.
 */
 
-var isBinarySearchTree = function (tree) {
+/*
+ * Key Concept: recursion
+*/
+var isBinarySearchTree = function (node) {
+  var inner = function (node, lowerbound, upperbound) {
+    // base case
+    if (!node) return true;
 
+    var value = node.value;
+    return (lowerbound <= value && value < upperbound) ?
+      inner(node.left, min, value) && inner(node.right, value, max) :
+      false;
+  };
+
+  return inner(node, Math.MIN_VALUE, Math.MAX_VALUE);
 };
 
 /*
