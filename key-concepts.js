@@ -398,8 +398,96 @@ var arrayOfArray = function (obj) {
  * f('AbrAcadAbRa', 'cAda') // 2
 */
 
-var anagram = function () {
+/*
+ * Key Concepts: functional programming, all numbers of products of prime numbers
+*/
+var numAnagrams = function (base, child) {
+  var childLen = child.length;
+  var baseLen  = base.length;
+  var count    = 0;
+  var slice, start, end;
 
+  for (start = 0; start < baseLen - childLen; start += 1) {
+    for (end = start + childLen; end < baseLen; end += 1) {
+      slice = base.slice(start, end);
+      if (isAnagram(slice, child)) {
+        count += 1;
+      }
+    }
+  }
+  return count;
+};
+
+var isAnagram = function () {
+  var args   = Array.prototype.slice.call(arguments);
+  var values = args.map(function (arg) {
+    return convertToValue(arg);
+  });
+
+  return values.reduce(function (a, c) {
+    return a && c === values[0];
+  }, true);
+};
+
+var convertToValue = function (string) {
+  return string.split('').reduce(function (a, c) {
+    return a * characterToPrime[c];
+  }, 1);
+};
+
+var characterToPrime = {
+  a: 2,
+  b: 3,
+  c: 5,
+  d: 7,
+  e: 11,
+  f: 13,
+  g: 17,
+  h: 19,
+  i: 23,
+  j: 29,
+  k: 31,
+  l: 37,
+  m: 41,
+  n: 43,
+  o: 47,
+  p: 53,
+  q: 59,
+  r: 61,
+  s: 67,
+  t: 71,
+  u: 73,
+  v: 79,
+  w: 83,
+  x: 89,
+  y: 97,
+  z: 101,
+  A: 103,
+  B: 107,
+  C: 109,
+  D: 113,
+  E: 127,
+  F: 131,
+  G: 137,
+  H: 139,
+  I: 149,
+  J: 151,
+  K: 157,
+  L: 163,
+  M: 167,
+  N: 173,
+  O: 179,
+  P: 181,
+  Q: 191,
+  R: 193,
+  S: 197,
+  T: 199,
+  U: 211,
+  V: 223,
+  W: 227,
+  X: 229,
+  Y: 233,
+  Z: 239
 };
 
 /*
