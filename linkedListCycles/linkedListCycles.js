@@ -38,10 +38,10 @@ var Node = function (value) {
   };
 };
 
-var hasCycle = function (linkedList) {
-  // create two 'runners' who start at the same node
-  var one = linkedList;
-  var two = linkedList;
+var hasCycle = function (startNode) {
+  // create two 'runners' who start at the same startNode
+  var one = startNode;
+  var two = startNode;
 
   while ( true ) {
     // check if the next one or two nodes are null
