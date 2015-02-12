@@ -133,11 +133,13 @@ end
 #
 
 def rock_paper_scissors(num)
+  # base case
   return [] if num <= 0
-  return [ ['rock'], ['paper'], ['scissors'] ] if num == 1
+  return [['rock'], ['paper'], ['scissors']] if num == 1
 
+  # recursive case
   rock_paper_scissors(num - 1).reduce([]) do |acc, arr|
-    acc + (['rock', 'paper', 'scissors'].map { |hand| arr + [ hand ] })
+    acc + (['rock', 'paper', 'scissors'].map { |hand| arr + [hand] })
   end
 end
 
@@ -147,7 +149,22 @@ end
 #
 
 def permutations(array)
+  len = array.length
 
+  # base case
+  return []      if len == 0
+  return [array] if len == 1
+
+  # recursive case
+  first  = array[0]
+
+  permutations(array[1...len]).reduce([]) do |acc, arr|
+    arr_len = arr.length
+    for i in 0..arr_len # include the length as the final index
+      acc.push(arr[0...i] + [first] + arr[i...arr_len])
+    end
+    acc
+  end
 end
 
 
