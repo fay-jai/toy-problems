@@ -257,11 +257,21 @@ end
 # Write a function that accepts a multi dimensional array and returns a
 # flattened version.
 #
-# flatten([1, 2, [3, [4], 5, 6], 7]) // [1, 2, 3, 4, 5, 6, 7]
+# my_flatten([1, 2, [3, [4], 5, 6], 7]) // [1, 2, 3, 4, 5, 6, 7]
 #
 
-def flatten(array)
+def my_flatten(array)
+  len = array.length
 
+  # base case
+  return array if len == 0
+
+  # recursive case
+  first = array[0]
+  rest  = array[1...len]
+
+  # ternary operator
+  (first.class == Array ? my_flatten(first) : [ first ]) + my_flatten(rest)
 end
 
 
