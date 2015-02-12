@@ -349,7 +349,42 @@ end
 #
 
 def num_anagrams(base, child)
+  base_len  = base.length
+  child_len = child.length
 
+  # base case
+  return 0 if base_len < child_len
+
+  # recursive case: child string can be as large as base string
+  total    = 0
+  anagrams = create_anagrams child
+
+  for i in 0..(base_len - child_len)
+    str = base[i, child_len]
+    total += 1 if anagrams.include? str
+  end
+  total
+end
+
+def create_anagrams(string)
+  len = string.length
+
+  # base cases
+  return []       if len == 0
+  return [string] if len == 1
+
+  # recursive case
+  first  = string[0]
+  rest   = create_anagrams string[1...len]
+  result = []
+
+  for element in rest # string
+    el_len = element.length
+    for i in 0..el_len
+      result << (element[0...i] + first + element[i...el_len])
+    end
+  end
+  result
 end
 
 
