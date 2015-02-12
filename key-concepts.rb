@@ -1,4 +1,52 @@
 #
+# write a function that takes a string of text and returns true if
+# the parentheses are balanced and false otherwise.
+#
+# Example:
+#   balancedParens('(');  // false
+#   balancedParens('()'); // true
+#   balancedParens(')(');  // false
+#   balancedParens('(())');  // true
+#
+# Step 2:
+#   make your solution work for all types of brackets
+#
+# Example:
+#  balancedParens('[](){}'); // true
+#  balancedParens('[({})]');   // true
+#  balancedParens('[(]{)}'); // false
+#
+# Step 3:
+# ignore non-bracket characters
+# balancedParens(' var wow  = { yo: thisIsAwesome() }'); // true
+# balancedParens(' var hubble = function() { telescopes.awesome();'); // false
+#
+#
+#
+
+def balanced_parens(string)
+
+end
+
+
+#
+# Write a function `f(a, b)` which takes two strings as arguments and returns a
+# string containing only the unique characters found in both strings, in the
+# order that they appeared in `a`. Remember to skip spaces and characters you
+# have already encountered!
+#
+# Example: commonCharacters('acexivou', 'aegihobu')
+# Returns: 'aeiou'
+#
+# Extra credit: Extend your function to handle more than two input strings.
+#
+
+def common_characters(a, b)
+
+end
+
+
+#
 # Write a function that generates every sequence of throws a single
 # player could throw over a three-round game of rock-paper-scissors.
 #
