@@ -360,7 +360,17 @@ end
 #
 
 def is_binary_search_tree?(node)
+  FIXNUM_MAX = (2**(0.size * 8 -2) -1)
+  FIXNUM_MIN = -(2**(0.size * 8 -2))
 
+  _is_binary_search_tree(FIXNUM_MIN, FIXNUM_MAX, node)
+end
+
+def _is_binary_search_tree?(min, max, node)
+  return true  if node == nil
+  return false if node.value < min || node.value > max
+  return _is_binary_search_tree(min, node.value, node.left) &&
+         _is_binary_search_tree(node.value, max, node.right)
 end
 
 
