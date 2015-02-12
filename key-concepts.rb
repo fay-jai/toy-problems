@@ -450,7 +450,25 @@ end
 #
 
 def largest_palindrome(string)
+  len    = string.length
+  result = ''
+  max    = 0
 
+  for start_at in 0..(len - 1)
+    for end_at in 0..(len - 1)
+      str = string[start_at..end_at]
+      if is_palindrome(str) && str.length > max
+        result = str
+        max    = str.length
+      end
+    end
+  end
+
+  result
+end
+
+def is_palindrome(string)
+  string == string.reverse
 end
 
 
