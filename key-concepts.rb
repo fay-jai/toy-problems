@@ -385,7 +385,18 @@ end
 #
 
 def array_pair_sum(num, array)
+  len    = array.length
+  result = []
 
+  for start_at in 0..(len - 2)
+    for end_at in (start_at + 1)..(len - 1)
+      if array[start_at] + array[end_at] == num
+        result << [ array[start_at], array[end_at] ]
+      end
+    end
+  end
+
+  result
 end
 
 
