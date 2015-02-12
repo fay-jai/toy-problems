@@ -253,7 +253,22 @@ end
 #
 
 def make_change(amt)
+  _make_change(amt, available_coins(amt))
+end
 
+def available_coins(amt)
+  [200, 100, 50, 20, 10, 5, 2, 1].find_all { |coin| amt >= coin }
+end
+
+def _make_change(amt, coin_array)
+  # base cases
+  return 0 if amt < 0
+  return 1 if amt == 0
+
+  # recursive case
+  coin_array.reduce(0) do |acc, cur|
+    acc + _make_change(amt - cur, available_coins(cur))
+  end
 end
 
 
