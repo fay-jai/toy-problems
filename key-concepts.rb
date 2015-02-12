@@ -58,16 +58,54 @@ end
 # order that they appeared in `a`. Remember to skip spaces and characters you
 # have already encountered!
 #
-# Example: commonCharacters('acexivou', 'aegihobu')
+# Example: common_characters('acexivou', 'aegihobu')
 # Returns: 'aeiou'
 #
 # Extra credit: Extend your function to handle more than two input strings.
 #
 
-def common_characters(a, b)
+# def common_characters(a, b)
+#   require 'set'
+#
+#   result    = ''
+#   set_a     = Set.new a.split('')
+#   set_b     = Set.new b.split('')
+#   intersect = set_a & set_b
+#
+#   set_a.each do |char|
+#     result += char if intersect.include? char
+#   end
+#
+#   result
+# end
 
+def common_characters(a, b)
+  hash_a    = create_hash_from_string(a)
+  hash_b    = create_hash_from_string(b)
+  intersect = in_common_hash(hash_a, hash_b)
+
+  result = ''
+  hash_a.each do |key, value|
+    result += key if intersect[key]
+  end
+  result
 end
 
+def create_hash_from_string(string)
+  hash = {}
+  string.each_char do |char|
+    hash[char] ||= true
+  end
+  hash
+end
+
+def in_common_hash(hash_one, hash_two)
+  result = {}
+  hash_one.each do |key, value|
+    result[key] = true if hash_two[key]
+  end
+  result
+end
 
 #
 # Write a function that generates every sequence of throws a single
