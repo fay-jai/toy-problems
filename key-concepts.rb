@@ -3,31 +3,54 @@
 # the parentheses are balanced and false otherwise.
 #
 # Example:
-#   balancedParens('(');  // false
-#   balancedParens('()'); // true
-#   balancedParens(')(');  // false
-#   balancedParens('(())');  // true
+#   balanced_parens('(');  // false
+#   balanced_parens('()'); // true
+#   balanced_parens(')(');  // false
+#   balanced_parens('(())');  // true
 #
 # Step 2:
 #   make your solution work for all types of brackets
 #
 # Example:
-#  balancedParens('[](){}'); // true
-#  balancedParens('[({})]');   // true
-#  balancedParens('[(]{)}'); // false
+#  balanced_parens('[](){}'); // true
+#  balanced_parens('[({})]');   // true
+#  balanced_parens('[(]{)}'); // false
 #
 # Step 3:
 # ignore non-bracket characters
-# balancedParens(' var wow  = { yo: thisIsAwesome() }'); // true
-# balancedParens(' var hubble = function() { telescopes.awesome();'); // false
+# balanced_parens(' var wow  = { yo: thisIsAwesome() }'); // true
+# balanced_parens(' var hubble = function() { telescopes.awesome();'); // false
 #
-#
-#
+
+# Key Concepts:
+# When resolving an identifier, if the identifier is a local variable, then
+# check whether the current scope has it. If not, then an error will be thrown.
+# If the identifier is not a keyword, then it will be an implicit method call
+# to the 'self' object.
 
 def balanced_parens(string)
+  stack = []
+  matching_character = { ')' => '(', ']' => '[', '}' => '{' }
 
+  string.each_char do |char|
+    if is_opening_character(char)
+      stack.push(char)
+    elsif is_closing_character(char)
+      remove = stack.pop
+      return false if matching_character[char] != remove
+    end
+  end
+
+  return stack.length == 0
 end
 
+def is_opening_character(character)
+  character == '(' || character == '[' || character == '{'
+end
+
+def is_closing_character(character)
+  character == ')' || character == ']' || character == '}'
+end
 
 #
 # Write a function `f(a, b)` which takes two strings as arguments and returns a
