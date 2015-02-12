@@ -460,13 +460,19 @@ end
 # Write a function that returns the longest word(s) from a sentence. The
 # function should not return any duplicate words (case-insensitive).
 #
-# longestWords("You are just an old antidisestablishmentarian")
+# longest_words("You are just an old antidisestablishmentarian")
 #   => ["antidisestablishmentarian"]
-# longestWords("I gave a present to my parents") => ["present", "parents"]
-# longestWords("Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo
+# longest_words("I gave a present to my parents") => ["present", "parents"]
+# longest_words("Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo
 # buffalo") => ["buffalo"] or ["Buffalo"]
 #
 
 def longest_words(string)
+  require 'set'
 
+  words        = string.split(' ').map { |word| word.downcase }
+  max_num_char = words.reduce(0) { |acc, word| [ acc, word.length ].max }
+  unique_set   = Set.new(words.find_all { |word| word.length == max_num_char })
+
+  unique_set.to_a
 end
