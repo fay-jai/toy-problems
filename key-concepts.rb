@@ -156,12 +156,11 @@ def permutations(array)
   return [array] if len == 1
 
   # recursive case
-  first  = array[0]
+  first  = array.take 1
 
-  permutations(array[1...len]).reduce([]) do |acc, arr|
-    arr_len = arr.length
-    for i in 0..arr_len # include the length as the final index
-      acc.push(arr[0...i] + [first] + arr[i...arr_len])
+  permutations(array.drop(1)).reduce([]) do |acc, arr|
+    for i in 0..arr.length # include the length as the final index
+      acc.push(arr.take(i) + first + arr.drop(i))
     end
     acc
   end
@@ -173,7 +172,20 @@ end
 #
 
 def combinations(array)
+  len = array.length
 
+  # base case
+  return []      if len == 0
+  return [array] if len == 1
+
+  # recursive case
+  first = array.take 1
+  rest  = combinations array.drop(1)
+
+  (rest.reduce([]) do |acc, arr|
+    acc << (first + arr)
+    acc << arr
+  end) << first # reduce returns an array which I'm pushing first onto, and returning the entire expression
 end
 
 
