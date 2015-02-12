@@ -397,9 +397,29 @@ end
 #
 
 def even_occurences(integer_array)
+  hash = create_integer_hash integer_array
 
+  result = hash.find_all do |key, value|
+    value % 2 == 0
+  end
+
+  if result.length == 0
+    raise 'All integers occur an odd number of times'
+  elsif result.length == 1
+    return result[0][0]
+  else
+    raise 'There are multiple even occurences'
+  end
 end
 
+def create_integer_hash(integer_array)
+  hash = {}
+  integer_array.each do |num|
+    hash[num] ||= 0
+    hash[num] += 1
+  end
+  hash
+end
 
 #
 # Flatten Array
