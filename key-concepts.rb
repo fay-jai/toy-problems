@@ -280,7 +280,7 @@ end
 #
 #       :: Example ::
 #
-#  characterFrequency('mississippi') ===
+#  character_frequency('mississippi') ===
 #  [
 #    ['i', 4],
 #    ['s', 4],
@@ -290,7 +290,7 @@ end
 #
 #       :: Gotcha ::
 #
-#  characterFrequency('miaaiaaippi') ===
+#  character_frequency('miaaiaaippi') ===
 #  [
 #    ['a', 4],
 #    ['i', 4],
@@ -302,9 +302,39 @@ end
 #
 
 def character_frequency(string)
+  unsorted = convert_to_data_structure( create_string_hash(string) )
 
+  unsorted.sort do |arr1, arr2|
+    result = 0
+    if arr1[1] > arr2[1]
+      result = -1
+    elsif arr1[1] < arr2[1]
+      result = 1
+    elsif arr1[0].ord < arr2[0].ord
+      result = -1
+    else
+      result = 1
+    end
+    result
+  end
 end
 
+def create_string_hash(string)
+  hash = {}
+  string.each_char do |char|
+    hash[char] ||= 0
+    hash[char] += 1
+  end
+  hash
+end
+
+def convert_to_data_structure(hash)
+  result = []
+  hash.each do |key, value|
+    result << [key, value]
+  end
+  result
+end
 
 #
 # Anagram Detection
