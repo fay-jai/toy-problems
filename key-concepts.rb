@@ -437,7 +437,16 @@ end
 #
 
 def integer_difference(num, array)
+  len   = array.length
+  total = 0
 
+  for start_at in 0..(len - 2)
+    for end_at in (start_at + 1)..(len - 1)
+      total += 1 if (array[start_at] - array[end_at]).abs == num
+    end
+  end
+
+  total
 end
 
 #
