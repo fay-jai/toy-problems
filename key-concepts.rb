@@ -221,7 +221,8 @@ end
 #
 
 def is_subset_of(base, input)
-
+  require 'set'
+  Set.new(input).subset? Set.new(base)
 end
 
 
