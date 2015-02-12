@@ -194,7 +194,16 @@ end
 #
 
 def binary_search(sorted_array, value)
+  _binary_search(0, sorted_array.length, sorted_array, value)
+end
 
+def _binary_search(start, last, array, value)
+  mid = (start + last) / 2
+
+  return (value == array[mid] ? mid : nil) if mid == start || mid == last
+  return mid if value == array[mid]
+  return _binary_search(start, mid, array, value) if value < array[mid]
+  _binary_search(mid, last, array, value)
 end
 
 
