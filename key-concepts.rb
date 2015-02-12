@@ -133,7 +133,12 @@ end
 #
 
 def rock_paper_scissors(num)
+  return [] if num <= 0
+  return [ ['rock'], ['paper'], ['scissors'] ] if num == 1
 
+  rock_paper_scissors(num - 1).reduce([]) do |acc, arr|
+    acc + (['rock', 'paper', 'scissors'].map { |hand| arr + [ hand ] })
+  end
 end
 
 
