@@ -1,1 +1,10 @@
 .DS_Store
+.gitignore
+balancedParens.js
+binarySearchArray.js
+coinSums.js
+combinations.js
+commonCharacters.js
+flipParens.js
+isSubsetOf.js
+permutations.js
