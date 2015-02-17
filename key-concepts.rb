@@ -329,11 +329,9 @@ def create_string_hash(string)
 end
 
 def convert_to_data_structure(hash)
-  result = []
-  hash.each do |key, value|
-    result << [key, value]
+  hash.reduce([]) do |acc, arr|
+    acc << arr
   end
-  result
 end
 
 #

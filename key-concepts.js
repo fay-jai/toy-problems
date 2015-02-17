@@ -752,3 +752,34 @@ var once = function (fn, x) {
     }
   };
 };
+
+/*
+ * Get Elements by Class Name
+ * Implement the `getElementsByClassName(element, className)` function in Javascript
+*/
+
+var getElementsByClassName = function (className, element) {
+  element        = element || document.body;
+
+  var inner = function (node, result) {
+    // check if current node has the class name
+    if (node.className.split(' ').indexOf(className) !== -1) {
+      // if it does, add the current node to result
+      result.push( node );
+    }
+
+    // determine whether current node has children
+    var children = Array.prototype.slice.call(node.children);
+      // if it doesn't then return result
+      // if it does:
+        // for each child, invoke inner on the child and a new empty array
+          // the returned value will be an array which should be concatenated to
+          // the current scope's result array
+
+    return children.reduce(function (acc, child) {
+      return result.concat( inner(child, []) );
+    }, result);
+  };
+
+  return inner(element, []);
+};
