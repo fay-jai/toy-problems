@@ -34,19 +34,45 @@
 
 
 var Range = function(start, end, step) {
-  // TODO: Your code here
-  
+  this.start = start;
+  this.end = end || 1;
+  this.step = step || 1;
+}
+
   this.size = function(){
-    // TODO: Your code here
-  }
+    var range = [];
+    
+    if (this.step < 0 || this.start > this.end) {
+        for (var i = this.end; i >= 0; i -= Math.abs(this.step)) {
+            range.push(i);
+        }
+    } else {
+        for (var i = this.start; i <= this.end; i += this.step) {
+            range.push(i);
+        }
+    }
+    return range.length;
+};
   
   this.each = function(callback){
-    // TODO: Your code here
-  }
+   var range = []
+    if (this.start > this.end) {
+        for (var i = this.start; i >= 0; i -= Math.abs(this.step)) {
+          callback(i);
+        }
+    } else {
+        for (var i = this.start; i <= this.end; i += this.step) {
+          callback(i);
+        }
+    }
+  };
   
   this.includes = function(val){
-    // TODO: Your code here
-  }
-  
-  return this;
-}
+    var result = false;
+  Range.prototype.each.call(this, function(item){
+    if (item === val){
+      result = true;
+    }
+  })
+  return result;
+};
