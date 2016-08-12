@@ -68,14 +68,11 @@ var Range = function(start, end, step) {
   };
   
   this.includes = function(val){
-    var range = this.getRange();
-    
-    if (range.indexOf(val) > -1) {
-        return true;
-    } else {
-        return false;
+    var result = false;
+  Range.prototype.each.call(this, function(item){
+    if (item === val){
+      result = true;
     }
-  };
-  
-  return this;
-}
+  })
+  return result;
+};
