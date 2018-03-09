@@ -42,32 +42,3 @@
  *  - Make your function operate on rectangular matrices (MxN rather than NxN).
  *  - Make your function accept a parameter for the direction of rotation (1 = clockwise, -1 = counterclockwise)
  */
-
-var rotateMatrix = function (matrix, direction) {
-  direction = direction || 1;
-  if ( typeof direction !== 'number' ||  (direction !== 1 && direction !== -1) ) {
-    throw new Error('direction must be 1 for clockwise or -1 for counterclockwise');
-  }
-
-  var rows    = matrix.length;
-  var cols    = matrix[0].length;
-  var newRows = cols;
-  var newCols = rows;
-  var result  = [];
-  var i, j, k;
-
-  // give result matrix the correct number of rows
-  for (k = 0; k < cols; k += 1) {
-    result.push( [] );
-  }
-
-  for (i = 0; i < newRows; i += 1) {
-    for (j = 0; j < newCols; j += 1) {
-      result[i][j] = direction === 1 ?
-        matrix[newCols - j - 1][i] :
-        matrix[j][newRows - i - 1];
-    }
-  }
-
-  return result;
-};

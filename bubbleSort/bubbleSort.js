@@ -34,24 +34,3 @@
 var i;
 
 // Feel free to add helper functions if needed.
-
-var bubbleSort = function(array) {
-  var length = array.length;
-  var i, j, temp, noSwap;
-
-  for (j = 0; j < length; j += 1) {
-    noSwap = true;
-    for (i = 0; i < length - j - 1; i += 1) {
-      if (array[i] > array[i + 1]) {
-        // swap
-        temp         = array[i];
-        array[i]     = array[i + 1];
-        array[i + 1] = temp;
-        noSwap       = false;
-      }
-    }
-    if (noSwap) { break; }
-  }
-
-  return array;
-};

@@ -39,23 +39,3 @@ var phoneDigitsToLetters = {
   8: 'TUV',
   9: 'WXYZ'
 };
-
-
-var telephoneWords = function (digitString) {
-  var len    = digitString.length;
-  var result = [];
-  var recur;
-
-  if ( len <= 0 ) return [];
-  if ( len === 1 ) return phoneDigitsToLetters[ digitString ].split('');
-
-  recur = telephoneWords( digitString.slice(1) );
-
-  phoneDigitsToLetters[ digitString[0] ].split('').forEach(function (letter) {
-    recur.forEach(function (array) {
-      result.push( Array.prototype.concat( letter, array ) );
-    });
-  });
-
-  return result;
-};
